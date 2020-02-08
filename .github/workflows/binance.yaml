@@ -1,0 +1,39 @@
+name: Binance
+# This workflow is triggered on pushes to the repository.
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron:  '1 0 * * *'
+
+jobs:
+  build:
+    name: Binance tickers
+    runs-on: ubuntu-latest
+    steps:
+      # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/hello-world-javascript-action
+      - uses: actions/checkout@v2
+
+      - run: python3 binance/pairs.py -m -q BTC> binance/binance_BTC_margin.txt
+      - run: python3 binance/pairs.py -m -q USDT> binance/binance_USDT_margin.txt
+      - run: python3 binance/pairs.py -m -q ETH> binance/binance_ETH_margin.txt
+      - run: python3 binance/pairs.py -m -q BNB> binance/binance_BNB_margin.txt
+      - run: python3 binance/pairs.py -m > binance/binance_margin_pairs.txt
+      - run: python3 binance/pairs.py -q BTC > binance/binance_BTC_pairs.txt
+      - run: python3 binance/pairs.py -q USDT > binance/binance_USDT_pairs.txt
+      - run: python3 binance/pairs.py -q ETH > binance/binance_ETH_pairs.txt
+      - run: python3 binance/pairs.py -q BNB > binance/binance_BNB_pairs.txt
+      - run: python3 binance/pairs.py > binance/binance_all_pairs.txt
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add binance/
+          git pull -r
+          git diff-index --quiet HEAD || git commit -m "Binance: automatic update" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

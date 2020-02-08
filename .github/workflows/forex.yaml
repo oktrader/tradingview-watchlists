@@ -1,0 +1,25 @@
+name: FX
+on:
+  schedule:
+    - cron:  '5 0 * * *'
+
+jobs:
+  build:
+    name: FX tickers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: python3 forex/pairs.py -e oanda > forex/oanda_pairs.txt
+      - run: python3 forex/pairs.py -e fx > forex/fxcm_pairs.txt
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add ftx/
+          git diff-index --quiet HEAD || git commit -m "CME: automatic update" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

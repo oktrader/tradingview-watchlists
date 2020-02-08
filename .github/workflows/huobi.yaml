@@ -1,0 +1,27 @@
+name: Huobi
+on:
+  schedule:
+    - cron:  '7 0 * * *'
+jobs:
+  build:
+    name: Huobi tickers
+    runs-on: ubuntu-latest
+    steps:
+      # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/hello-world-javascript-action
+      - uses: actions/checkout@v2
+
+      - run: python3 huobi/pairs.py -q BTC > huobi/huobi_BTC_pairs.txt
+      - run: python3 huobi/pairs.py -q USDT > huobi/huobi_USDT_pairs.txt
+      - run: python3 huobi/pairs.py -q ETH > huobi/huobi_ETH_pairs.txt
+      - run: python3 huobi/pairs.py > huobi/huobi_all_pairs.txt
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add huobi/
+          git diff-index --quiet HEAD || git commit -m "Huobi: automatic update" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
