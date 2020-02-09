@@ -12,8 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: python3 cme/pairs.py -e nymex > cme/nymex_contracts.txt
-      - run: python3 cme/pairs.py -e cme > cme/globex_contract.txt
+      - run: python3 cme/pairs.py -e nymex | sort > cme/nymex_contracts.txt
+      - run: python3 cme/pairs.py -e cme | sort > cme/globex_contract.txt
 
       - name: Commit files
         run: |
