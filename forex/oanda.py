@@ -15,4 +15,4 @@ if __name__ == "__main__":
             data={'lang': 'en-GB', 'region': 'OEL', 'instrumentType': inst_type}).json()
         symbols = map(lambda x: 'OANDA:{}'.format(
             x['Instrument'].replace('_', '')), symbols)
-        print(',\n'.join(symbols))
+        print(',\n'.join(sorted(symbols)))
