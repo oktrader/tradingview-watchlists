@@ -9,6 +9,10 @@ parser.add_argument('-nyse', '--nyse', action='store_true')
 parser.add_argument('-arca', '--arca', action='store_true')
 parser.add_argument('-etfs', '--etfs', action='store_true')
 
+exchanges = {
+    'N': 'NYSE',
+    'P': 'ARCA'
+}
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -51,7 +55,5 @@ if __name__ == "__main__":
             if '$' in ticker or '.' in ticker:
                 continue
 
-            if args.nyse and exchange == 'N':
-                print('NYSE:{}'.format(ticker))
-            elif args.arca and exchange == 'P':
-                print('AMEX:{}'.format(ticker))
+            if exchange in exchanges:
+                print('{}}:{}'.format(exchanges[exchange], ticker))

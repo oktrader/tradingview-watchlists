@@ -14,4 +14,4 @@ if __name__ == "__main__":
 
     symbols = map(lambda x: 'HUOBI:{}'.format(x['symbol'].upper()), symbols)
 
-    print(',\n'.join(symbols))
+    print(',\n'.join(sorted(symbols)))

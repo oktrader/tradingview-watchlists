@@ -19,4 +19,4 @@ if __name__ == "__main__":
 
     symbols = map(lambda x: 'FTX:{}'.format(x['name'].upper().replace('-', '').replace('/', '')), symbols)
 
-    print(',\n'.join(symbols))
+    print(',\n'.join(sorted(symbols)))
