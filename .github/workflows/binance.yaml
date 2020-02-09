@@ -31,6 +31,5 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add binance/
-          git pull -r
           git diff-index --quiet HEAD || git commit -m "Binance: automatic update" -a
           git pull --rebase && git push
