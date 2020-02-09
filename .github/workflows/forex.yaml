@@ -4,11 +4,11 @@ on:
     branches:
       - master
   schedule:
-    - cron: "5 0 * * *"
+    - cron: "5 1 * * *"
 
 jobs:
   build:
-    name: FX tickers
+    name: Oanda tickers
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,7 +23,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add forex/
-          git diff-index --quiet HEAD || git commit -m "CME: automatic update" -a
+          git diff-index --quiet HEAD || git commit -m "Oanda: automatic update" -a
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
