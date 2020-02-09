@@ -56,4 +56,4 @@ if __name__ == "__main__":
                 continue
 
             if exchange in exchanges:
-                print('{}}:{}'.format(exchanges[exchange], ticker))
+                print('{}:{}'.format(exchanges[exchange], ticker))
