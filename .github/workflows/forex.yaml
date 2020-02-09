@@ -4,7 +4,7 @@ on:
     branches:
       - master
   schedule:
-    - cron:  '5 0 * * *'
+    - cron: "5 0 * * *"
 
 jobs:
   build:
@@ -13,8 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: python3 forex/pairs.py -e oanda > forex/oanda_pairs.txt
-      - run: python3 forex/pairs.py -e fx > forex/fxcm_pairs.txt
+      - run: python3 forex/oanda.py > forex/oanda_all_pairs.txt
+      - run: python3 forex/oanda.py -t cfd > forex/oanda_cfd_pairs.txt
+      - run: python3 forex/oanda.py -t currency > forex/oanda_fx_pairs.txt
+      - run: python3 forex/oanda.py -t metal > forex/oanda_metal_pairs.txt
 
       - name: Commit files
         run: |
