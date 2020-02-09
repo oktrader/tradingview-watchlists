@@ -18,4 +18,4 @@ if __name__ == "__main__":
 
     symbols = map(lambda x: 'BINANCE:{}'.format(x['symbol']), symbols)
 
-    print(',\n'.join(symbols))
+    print(',\n'.join(sorted(symbols)))
