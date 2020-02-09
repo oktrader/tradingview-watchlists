@@ -33,7 +33,4 @@ jobs:
           git add binance/
           git pull -r
           git diff-index --quiet HEAD || git commit -m "Binance: automatic update" -a
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          git pull --rebase && git push
