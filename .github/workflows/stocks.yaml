@@ -1,8 +1,5 @@
 name: Stocks
 on:
-  push:
-    branches:
-      - master
   schedule:
     - cron:  '8 0 * * *'
 

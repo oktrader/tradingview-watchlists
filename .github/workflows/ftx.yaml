@@ -1,8 +1,5 @@
 name: FTX
 on:
-  push:
-    branches:
-      - master
   schedule:
     - cron:  '6 0 * * *'
 jobs:

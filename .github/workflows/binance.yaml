@@ -1,9 +1,6 @@
 name: Binance
 # This workflow is triggered on pushes to the repository.
 on:
-  push:
-    branches:
-      - master
   schedule:
     - cron:  '1 0 * * *'
 

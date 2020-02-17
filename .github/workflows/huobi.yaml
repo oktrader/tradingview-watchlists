@@ -1,8 +1,5 @@
 name: Huobi
 on:
-  push:
-    branches:
-      - master
   schedule:
     - cron:  '7 0 * * *'
 jobs:

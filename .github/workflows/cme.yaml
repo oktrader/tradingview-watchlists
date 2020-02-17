@@ -1,8 +1,5 @@
 name: CME
 on:
-  push:
-    branches:
-      - master
   schedule:
     - cron:  '4 0 * * *'
 jobs:
