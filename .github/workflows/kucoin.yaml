@@ -1,0 +1,25 @@
+name: Kucoin
+on:
+  schedule:
+    - cron:  '14 0 * * *'
+
+jobs:
+  build:
+    name: Kicoin tickers
+    runs-on: ubuntu-latest
+    steps:
+      # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/hello-world-javascript-action
+      - uses: actions/checkout@v2
+
+      - run: python3 kucoin/pairs.py -q BTC > kucoin/kucoin_BTC_pairs.txt
+      - run: python3 kucoin/pairs.py -q USDT > kucoin/kucoin_USDT_pairs.txt
+      - run: python3 kucoin/pairs.py -q ETH > kucoin/kucoin_ETH_pairs.txt
+      - run: python3 kucoin/pairs.py > kucoin/kucoin_all_pairs.txt
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add kucoin/
+          git diff-index --quiet HEAD || git commit -m "kucoin: automatic update" -a
+          git pull --rebase && git push
