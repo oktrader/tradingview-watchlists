@@ -12,6 +12,7 @@ jobs:
 
       - run: python3 ftx/pairs.py -s > ftx/ftx_spot_pairs.txt
       - run: python3 ftx/pairs.py -f > ftx/ftx_futures_pairs.txt
+      - run: python3 ftx/pairs.py -p > ftx/ftx_perp_pairs.txt
       - run: python3 ftx/pairs.py > ftx/ftx_all_pairs.txt
 
       - name: Commit files
