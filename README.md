@@ -1,4 +1,4 @@
-# TradingView watchlists
+# Automated TradingView watchlists
 
 | Source | Status |
 | --- | --- |
