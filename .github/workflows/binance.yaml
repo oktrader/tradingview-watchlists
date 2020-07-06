@@ -22,6 +22,7 @@ jobs:
       - run: python3 binance/pairs.py -q ETH > binance/binance_ETH_pairs.txt
       - run: python3 binance/pairs.py -q BNB > binance/binance_BNB_pairs.txt
       - run: python3 binance/pairs.py > binance/binance_all_pairs.txt
+      - run: python3 binance/pairs.py -f > binance/binance_futures.txt
 
       - name: Commit files
         run: |
