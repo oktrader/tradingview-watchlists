@@ -14,7 +14,7 @@ if __name__ == "__main__":
         symbols = map(lambda x: 'BINANCE:{}PERP'.format(x['symbol']), symbols)
         print(',\n'.join(sorted(symbols)))
     else:
-        symbols = requests.get('https://api.binance.com/api/v1/exchangeInfo').json()['symbols']
+        symbols = filter(lambda x: x['status'] == 'TRADING', requests.get('https://api.binance.com/api/v1/exchangeInfo').json()['symbols'])
         if args.margin:
             symbols = filter(lambda x: x['isMarginTradingAllowed'], symbols)
         if args.quote_asset:
