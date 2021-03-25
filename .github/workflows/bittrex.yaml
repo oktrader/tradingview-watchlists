@@ -15,6 +15,7 @@ jobs:
       - run: python3 bittrex/pairs.py -q USD > bittrex/bittrex_USD_pairs.txt
       - run: python3 bittrex/pairs.py -q ETH > bittrex/bittrex_ETH_pairs.txt
       - run: python3 bittrex/pairs.py > bittrex/bittrex_all_pairs.txt
+      - run: python3 bittrex/pairs.py -s > bittrex/bittrex_stocks.txt
 
       - name: Commit files
         run: |
