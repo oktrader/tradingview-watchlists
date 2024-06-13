@@ -8,7 +8,7 @@ jobs:
     name: Oanda tickers
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - run: python3 forex/oanda.py > forex/oanda_all_pairs.txt
       - run: python3 forex/oanda.py -t cfd > forex/oanda_cfd_pairs.txt

@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/hello-world-javascript-action
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - run: python3 bitfinex/pairs.py -m -q BTC> bitfinex/bitfinex_BTC_margin.txt
       - run: python3 bitfinex/pairs.py -m -q USD> bitfinex/bitfinex_USD_margin.txt
