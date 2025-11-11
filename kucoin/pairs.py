@@ -2,6 +2,7 @@ import argparse
 import requests
 import sys
 import time
+import os
 
 # Retry configuration
 MAX_RETRIES = 3
@@ -9,9 +10,17 @@ RETRY_DELAY = 2  # seconds
 
 def fetch_with_retry(url, max_retries=MAX_RETRIES, delay=RETRY_DELAY):
     """Fetch URL with exponential backoff retry on failure."""
+    # Optional proxy support via environment variables
+    proxies = None
+    if os.getenv('HTTP_PROXY') or os.getenv('HTTPS_PROXY'):
+        proxies = {
+            'http': os.getenv('HTTP_PROXY'),
+            'https': os.getenv('HTTPS_PROXY', os.getenv('HTTP_PROXY'))
+        }
+    
     for attempt in range(max_retries):
         try:
-            response = requests.get(url, timeout=10)
+            response = requests.get(url, timeout=10, proxies=proxies)
             response.raise_for_status()
             return response.json()
         except (requests.RequestException, ValueError) as e:
@@ -30,7 +39,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     try:
-        data = fetch_with_retry('https://api.kucoin.com/api/v1/symbols')
+        url = os.getenv('KUCOIN_API', 'https://api.kucoin.com/api/v1/symbols')
+        data = fetch_with_retry(url)
         if 'data' not in data:
             raise KeyError(f"'data' key not found in API response: {list(data.keys())}")
         symbols = data['data']
