@@ -2,6 +2,7 @@ name: Bybit
 on:
   schedule:
     - cron:  '9 0 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
