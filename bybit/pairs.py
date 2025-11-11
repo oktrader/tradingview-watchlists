@@ -39,18 +39,22 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     try:
-        url = os.getenv('BYBIT_API', "https://api.bybit.com/v2/public/symbols")
+        # Bybit v5 API - get spot market tickers
+        url = os.getenv('BYBIT_API', "https://api.bybit.com/v5/market/tickers?category=spot")
         data = fetch_with_retry(url)
-        if 'result' not in data:
-            raise KeyError(f"'result' key not found in API response: {list(data.keys())}")
-        symbols = map(lambda x: x["name"], data["result"])
+        
+        # v5 API returns: { retCode, retMsg, result: { category, list: [...] }, ... }
+        if 'result' not in data or 'list' not in data['result']:
+            raise KeyError(f"Unexpected API response structure: {list(data.keys())}")
+        
+        symbols = [item['symbol'] for item in data['result']['list']]
 
         if args.quote_asset:
-            symbols = filter(lambda x: x.endswith(args.quote_asset.upper()), symbols)
+            symbols = [s for s in symbols if s.endswith(args.quote_asset.upper())]
 
-        symbols = map(lambda x: "BYBIT:{}".format(x.upper().replace(":", "")), symbols)
+        symbols_list = [f"BYBIT:{s.upper()}" for s in symbols]
 
-        print(",\n".join(sorted(symbols)))
+        print(",\n".join(sorted(symbols_list)))
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
