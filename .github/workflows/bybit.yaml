@@ -2,6 +2,7 @@ name: Bybit
 on:
   schedule:
     - cron:  '9 0 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -9,7 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/hello-world-javascript-action
+
+
       - uses: actions/checkout@v4
+
+      - name: Setup Python and install deps
+        uses: ./.github/actions/setup-python-deps
+        with:
+          python-version: '3.11'
+          requirements-file: 'requirements.txt'
 
       - run: python3 bybit/pairs.py > bybit/bybit_futures.txt
       - run: python3 bybit/pairs.py -q USD > bybit/bybit_USD_futures.txt

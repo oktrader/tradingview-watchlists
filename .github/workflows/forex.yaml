@@ -10,6 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Python and install deps
+        uses: ./.github/actions/setup-python-deps
+        with:
+          python-version: '3.11'
+          requirements-file: 'requirements.txt'
+
       - run: python3 forex/oanda.py > forex/oanda_all_pairs.txt
       - run: python3 forex/oanda.py -t cfd > forex/oanda_cfd_pairs.txt
       - run: python3 forex/oanda.py -t currency > forex/oanda_fx_pairs.txt
